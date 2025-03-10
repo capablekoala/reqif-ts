@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<REQ-IF xmlns="http://www.omg.org/spec/ReqIF/20110401/reqif.xsd" xmlns:xhtml="http://www.w3.org/1999/xhtml">
+  <THE-HEADER>
+    <REQ-IF-HEADER IDENTIFIER="test-specifications" CREATION-TIME="2023-01-01T12:00:00Z" REPOSITORY-ID="test-repo" REQ-IF-TOOL-ID="reqif-ts" REQ-IF-VERSION="1.0" SOURCE-TOOL-ID="manual" TITLE="Test Specifications">
+      <COMMENT>This is a test file with specifications and hierarchies</COMMENT>
+    </REQ-IF-HEADER>
+  </THE-HEADER>
+  <CORE-CONTENT>
+    <REQ-IF-CONTENT>
+      <DATATYPES>
+        <DATATYPE-DEFINITION-STRING IDENTIFIER="dt-string-1" LAST-CHANGE="2023-01-01T12:00:00Z" LONG-NAME="String Type" MAX-LENGTH="1000"/>
+        <DATATYPE-DEFINITION-XHTML IDENTIFIER="dt-xhtml-1" LAST-CHANGE="2023-01-01T12:00:00Z" LONG-NAME="XHTML Type"/>
+      </DATATYPES>
+      
+      <SPEC-TYPES>
+        <SPEC-OBJECT-TYPE IDENTIFIER="sot-1" LAST-CHANGE="2023-01-01T12:00:00Z" LONG-NAME="Requirement Type"/>
+        <SPECIFICATION-TYPE IDENTIFIER="st-1" LAST-CHANGE="2023-01-01T12:00:00Z" LONG-NAME="Document Type"/>
+      </SPEC-TYPES>
+      
+      <SPEC-OBJECTS>
+        <SPEC-OBJECT IDENTIFIER="so-1" LAST-CHANGE="2023-01-01T12:00:00Z" LONG-NAME="System Requirement 1">
+          <TYPE>
+            <SPEC-OBJECT-TYPE-REF>sot-1</SPEC-OBJECT-TYPE-REF>
+          </TYPE>
+          <VALUES>
+            <ATTRIBUTE-VALUE-STRING>
+              <DEFINITION>
+                <ATTRIBUTE-DEFINITION-STRING-REF>attr-def-1</ATTRIBUTE-DEFINITION-STRING-REF>
+              </DEFINITION>
+              <THE-VALUE>This is requirement 1</THE-VALUE>
+            </ATTRIBUTE-VALUE-STRING>
+          </VALUES>
+        </SPEC-OBJECT>
+        
+        <SPEC-OBJECT IDENTIFIER="so-2" LAST-CHANGE="2023-01-01T12:00:00Z" LONG-NAME="System Requirement 2">
+          <TYPE>
+            <SPEC-OBJECT-TYPE-REF>sot-1</SPEC-OBJECT-TYPE-REF>
+          </TYPE>
+          <VALUES>
+            <ATTRIBUTE-VALUE-STRING>
+              <DEFINITION>
+                <ATTRIBUTE-DEFINITION-STRING-REF>attr-def-1</ATTRIBUTE-DEFINITION-STRING-REF>
+              </DEFINITION>
+              <THE-VALUE>This is requirement 2</THE-VALUE>
+            </ATTRIBUTE-VALUE-STRING>
+          </VALUES>
+        </SPEC-OBJECT>
+        
+        <SPEC-OBJECT IDENTIFIER="so-3" LAST-CHANGE="2023-01-01T12:00:00Z" LONG-NAME="System Requirement 3">
+          <TYPE>
+            <SPEC-OBJECT-TYPE-REF>sot-1</SPEC-OBJECT-TYPE-REF>
+          </TYPE>
+          <VALUES>
+            <ATTRIBUTE-VALUE-STRING>
+              <DEFINITION>
+                <ATTRIBUTE-DEFINITION-STRING-REF>attr-def-1</ATTRIBUTE-DEFINITION-STRING-REF>
+              </DEFINITION>
+              <THE-VALUE>This is requirement 3</THE-VALUE>
+            </ATTRIBUTE-VALUE-STRING>
+          </VALUES>
+        </SPEC-OBJECT>
+      </SPEC-OBJECTS>
+      
+      <SPECIFICATIONS>
+        <SPECIFICATION IDENTIFIER="spec-1" LAST-CHANGE="2023-01-01T12:00:00Z" LONG-NAME="Test Document">
+          <TYPE>
+            <SPECIFICATION-TYPE-REF>st-1</SPECIFICATION-TYPE-REF>
+          </TYPE>
+          <CHILDREN>
+            <SPEC-HIERARCHY IDENTIFIER="h-1" LAST-CHANGE="2023-01-01T12:00:00Z" LONG-NAME="Section 1">
+              <OBJECT>
+                <SPEC-OBJECT-REF>so-1</SPEC-OBJECT-REF>
+              </OBJECT>
+              <CHILDREN>
+                <SPEC-HIERARCHY IDENTIFIER="h-2" LAST-CHANGE="2023-01-01T12:00:00Z" LONG-NAME="Section 1.1">
+                  <OBJECT>
+                    <SPEC-OBJECT-REF>so-2</SPEC-OBJECT-REF>
+                  </OBJECT>
+                </SPEC-HIERARCHY>
+              </CHILDREN>
+            </SPEC-HIERARCHY>
+            <SPEC-HIERARCHY IDENTIFIER="h-3" LAST-CHANGE="2023-01-01T12:00:00Z" LONG-NAME="Section 2">
+              <OBJECT>
+                <SPEC-OBJECT-REF>so-3</SPEC-OBJECT-REF>
+              </OBJECT>
+            </SPEC-HIERARCHY>
+          </CHILDREN>
+        </SPECIFICATION>
+      </SPECIFICATIONS>
+    </REQ-IF-CONTENT>
+  </CORE-CONTENT>
+</REQ-IF>

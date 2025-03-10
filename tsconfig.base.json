@@ -1,0 +1,17 @@
+{
+  "compilerOptions": {
+    "target": "ES2022",
+    "module": "CommonJS",
+    "moduleResolution": "node",
+    "strict": true,
+    "esModuleInterop": true,
+    "skipLibCheck": true,
+    "forceConsistentCasingInFileNames": true,
+    "declaration": true,
+    "sourceMap": true,
+    "rootDir": "./src",
+    "lib": ["DOM", "DOM.Iterable", "ES2022"],
+    "allowSyntheticDefaultImports": true
+  },
+  "include": ["src/**/*"]
+}

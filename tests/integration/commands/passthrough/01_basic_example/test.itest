@@ -1,0 +1,4 @@
+RUN: %s passthrough sample.reqif output.reqif
+CHECK: Parsing ReqIF file: sample.reqif
+CHECK: Unparsing to: output.reqif
+CHECK: Passthrough completed successfully
