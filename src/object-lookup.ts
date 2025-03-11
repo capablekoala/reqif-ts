@@ -1,12 +1,12 @@
-import { ReqIFDataType } from './models/reqif-data-type';
-import { ReqIFSpecObject } from './models/reqif-spec-object';
-import { ReqIFSpecObjectType } from './models/reqif-spec-object-type';
-import { ReqIFSpecRelation } from './models/reqif-spec-relation';
-import { ReqIFSpecRelationType } from './models/reqif-spec-relation-type';
-import { ReqIFSpecification } from './models/reqif-specification';
-import { ReqIFSpecificationType } from './models/reqif-specification-type';
-import { ReqIFRelationGroup } from './models/reqif-relation-group';
-import { ReqIFRelationGroupType } from './models/reqif-relation-group-type';
+import { ReqIFDataType } from "./models/reqif-data-type";
+import { ReqIFSpecObject } from "./models/reqif-spec-object";
+import { ReqIFSpecObjectType } from "./models/reqif-spec-object-type";
+import { ReqIFSpecRelation } from "./models/reqif-spec-relation";
+import { ReqIFSpecRelationType } from "./models/reqif-spec-relation-type";
+import { ReqIFSpecification } from "./models/reqif-specification";
+import { ReqIFSpecificationType } from "./models/reqif-specification-type";
+import { ReqIFRelationGroup } from "./models/reqif-relation-group";
+import { ReqIFRelationGroupType } from "./models/reqif-relation-group-type";
 
 /**
  * Provides lookup tables for accessing ReqIF objects by their IDs.
@@ -18,10 +18,12 @@ export class ObjectLookup {
   private specRelationsById: Map<string, ReqIFSpecRelation> = new Map();
   private specRelationTypesById: Map<string, ReqIFSpecRelationType> = new Map();
   private specificationsById: Map<string, ReqIFSpecification> = new Map();
-  private specificationTypesById: Map<string, ReqIFSpecificationType> = new Map();
+  private specificationTypesById: Map<string, ReqIFSpecificationType> =
+    new Map();
   private dataTypesById: Map<string, ReqIFDataType> = new Map();
   private relationGroupsById: Map<string, ReqIFRelationGroup> = new Map();
-  private relationGroupTypesById: Map<string, ReqIFRelationGroupType> = new Map();
+  private relationGroupTypesById: Map<string, ReqIFRelationGroupType> =
+    new Map();
 
   registerSpecObject(specObject: ReqIFSpecObject): void {
     this.specObjectsById.set(specObject.identifier, specObject);
@@ -48,7 +50,10 @@ export class ObjectLookup {
   }
 
   registerSpecRelationType(specRelationType: ReqIFSpecRelationType): void {
-    this.specRelationTypesById.set(specRelationType.identifier, specRelationType);
+    this.specRelationTypesById.set(
+      specRelationType.identifier,
+      specRelationType,
+    );
   }
 
   getSpecRelationType(identifier: string): ReqIFSpecRelationType | undefined {
@@ -64,7 +69,10 @@ export class ObjectLookup {
   }
 
   registerSpecificationType(specificationType: ReqIFSpecificationType): void {
-    this.specificationTypesById.set(specificationType.identifier, specificationType);
+    this.specificationTypesById.set(
+      specificationType.identifier,
+      specificationType,
+    );
   }
 
   getSpecificationType(identifier: string): ReqIFSpecificationType | undefined {
@@ -88,7 +96,10 @@ export class ObjectLookup {
   }
 
   registerRelationGroupType(relationGroupType: ReqIFRelationGroupType): void {
-    this.relationGroupTypesById.set(relationGroupType.identifier, relationGroupType);
+    this.relationGroupTypesById.set(
+      relationGroupType.identifier,
+      relationGroupType,
+    );
   }
 
   getRelationGroupType(identifier: string): ReqIFRelationGroupType | undefined {

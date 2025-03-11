@@ -1,4 +1,4 @@
-import { ReqIFDataTypeKind, ReqIFIdentifiable } from './reqif-types';
+import { ReqIFDataTypeKind, ReqIFIdentifiable } from "./reqif-types";
 
 /**
  * Base class for all ReqIF data types.
@@ -9,7 +9,7 @@ export abstract class ReqIFDataType implements ReqIFIdentifiable {
     public kind: ReqIFDataTypeKind,
     public longName?: string,
     public lastChange?: string,
-    public desc?: string
+    public desc?: string,
   ) {}
 }
 
@@ -21,7 +21,7 @@ export class ReqIFDataTypeBoolean extends ReqIFDataType {
     identifier: string,
     longName?: string,
     lastChange?: string,
-    desc?: string
+    desc?: string,
   ) {
     super(identifier, ReqIFDataTypeKind.BOOLEAN, longName, lastChange, desc);
   }
@@ -35,7 +35,7 @@ export class ReqIFDataTypeDate extends ReqIFDataType {
     identifier: string,
     longName?: string,
     lastChange?: string,
-    desc?: string
+    desc?: string,
   ) {
     super(identifier, ReqIFDataTypeKind.DATE, longName, lastChange, desc);
   }
@@ -62,9 +62,15 @@ export class ReqIFDataTypeEnum extends ReqIFDataType {
     public multiValued: boolean = false,
     longName?: string,
     lastChange?: string,
-    desc?: string
+    desc?: string,
   ) {
-    super(identifier, ReqIFDataTypeKind.ENUMERATION, longName, lastChange, desc);
+    super(
+      identifier,
+      ReqIFDataTypeKind.ENUMERATION,
+      longName,
+      lastChange,
+      desc,
+    );
   }
 }
 
@@ -78,7 +84,7 @@ export class ReqIFDataTypeInteger extends ReqIFDataType {
     public max?: number,
     longName?: string,
     lastChange?: string,
-    desc?: string
+    desc?: string,
   ) {
     super(identifier, ReqIFDataTypeKind.INTEGER, longName, lastChange, desc);
   }
@@ -95,7 +101,7 @@ export class ReqIFDataTypeReal extends ReqIFDataType {
     public accuracy?: number,
     longName?: string,
     lastChange?: string,
-    desc?: string
+    desc?: string,
   ) {
     super(identifier, ReqIFDataTypeKind.REAL, longName, lastChange, desc);
   }
@@ -110,7 +116,7 @@ export class ReqIFDataTypeString extends ReqIFDataType {
     public maxLength?: number,
     longName?: string,
     lastChange?: string,
-    desc?: string
+    desc?: string,
   ) {
     super(identifier, ReqIFDataTypeKind.STRING, longName, lastChange, desc);
   }
@@ -124,7 +130,7 @@ export class ReqIFDataTypeXHTML extends ReqIFDataType {
     identifier: string,
     longName?: string,
     lastChange?: string,
-    desc?: string
+    desc?: string,
   ) {
     super(identifier, ReqIFDataTypeKind.XHTML, longName, lastChange, desc);
   }

@@ -3,12 +3,12 @@
  * Provides functionality to export ReqIF specifications to HTML format.
  */
 
-import { ReqIFBundle } from '../../reqif-bundle';
-import { ReqIFSpecification } from '../../models/reqif-specification';
-import { ReqIFSpecHierarchy } from '../../models/reqif-spec-hierarchy';
-import { ReqIFSpecObject } from '../../models/reqif-spec-object';
-import { ReqIFAttributeValueKind } from '../../models/reqif-types';
-import { createFileSystem } from '../../helpers/fs-adapter';
+import { ReqIFBundle } from "../../reqif-bundle";
+import { ReqIFSpecification } from "../../models/reqif-specification";
+import { ReqIFSpecHierarchy } from "../../models/reqif-spec-hierarchy";
+import { ReqIFSpecObject } from "../../models/reqif-spec-object";
+import { ReqIFAttributeValueKind } from "../../models/reqif-types";
+import { createFileSystem } from "../../helpers/fs-adapter";
 
 /**
  * HTML export options
@@ -21,7 +21,7 @@ export interface HTMLExportOptions {
   /** Include header and footer sections */
   includeHeaderFooter?: boolean;
   /** Format of the output (pretty or compact) */
-  format?: 'pretty' | 'compact';
+  format?: "pretty" | "compact";
   /** Title for the HTML document */
   title?: string;
   /** Include attribute metadata */
@@ -35,8 +35,8 @@ const DEFAULT_OPTIONS: HTMLExportOptions = {
   includeStyle: true,
   includeScript: true,
   includeHeaderFooter: true,
-  format: 'pretty',
-  title: 'ReqIF Export',
+  format: "pretty",
+  title: "ReqIF Export",
   includeMetadata: true,
 };
 
@@ -53,50 +53,54 @@ export class HTMLExporter {
   static export(bundle: ReqIFBundle, options: HTMLExportOptions = {}): string {
     // Merge with default options
     const opts = { ...DEFAULT_OPTIONS, ...options };
-    
+
     // Start building HTML
-    let html = '';
-    
+    let html = "";
+
     // Add HTML header
     if (opts.includeHeaderFooter) {
       html += this.generateHTMLHeader(opts);
     }
-    
+
     // Add document container
     html += '<div class="reqif-document">';
-    
+
     // Add title
     html += `<h1 class="reqif-title">${opts.title}</h1>`;
-    
+
     // Add specifications
     const specs = bundle.coreContent.reqIfContent.specifications;
     for (const spec of specs) {
       html += this.generateSpecificationHTML(bundle, spec, opts);
     }
-    
+
     // Close document container
-    html += '</div>';
-    
+    html += "</div>";
+
     // Add HTML footer
     if (opts.includeHeaderFooter) {
       html += this.generateHTMLFooter(opts);
     }
-    
+
     return html;
   }
-  
+
   /**
    * Export a ReqIF bundle to an HTML file
    * @param bundle The ReqIF bundle to export
    * @param filePath The file path to save the HTML
    * @param options Export options
    */
-  static async exportToFile(bundle: ReqIFBundle, filePath: string, options: HTMLExportOptions = {}): Promise<void> {
+  static async exportToFile(
+    bundle: ReqIFBundle,
+    filePath: string,
+    options: HTMLExportOptions = {},
+  ): Promise<void> {
     const html = this.export(bundle, options);
     const fs = createFileSystem();
     await fs.writeFile(filePath, html);
   }
-  
+
   /**
    * Generate HTML for a specification
    * @param bundle The ReqIF bundle
@@ -104,45 +108,49 @@ export class HTMLExporter {
    * @param options Export options
    * @returns HTML string
    */
-  private static generateSpecificationHTML(bundle: ReqIFBundle, spec: ReqIFSpecification, options: HTMLExportOptions): string {
-    let html = '';
-    
+  private static generateSpecificationHTML(
+    bundle: ReqIFBundle,
+    spec: ReqIFSpecification,
+    options: HTMLExportOptions,
+  ): string {
+    let html = "";
+
     // Start specification section
     html += '<section class="specification">';
-    
+
     // Add specification header
     html += `<div class="specification-header">
       <h2 class="specification-title">${spec.longName || spec.identifier}</h2>
     </div>`;
-    
+
     // Add specification metadata if requested
     if (options.includeMetadata) {
       html += `<div class="specification-metadata">
         <dl>
           <dt>Identifier</dt>
           <dd>${spec.identifier}</dd>
-          ${spec.lastChange ? `<dt>Last Change</dt><dd>${spec.lastChange}</dd>` : ''}
-          ${spec.desc ? `<dt>Description</dt><dd>${spec.desc}</dd>` : ''}
+          ${spec.lastChange ? `<dt>Last Change</dt><dd>${spec.lastChange}</dd>` : ""}
+          ${spec.desc ? `<dt>Description</dt><dd>${spec.desc}</dd>` : ""}
         </dl>
       </div>`;
     }
-    
+
     // Add specification content - hierarchy of requirements
     html += '<div class="specification-content">';
-    
+
     // Create a table for requirements
     html += '<table class="requirements-table">';
     html += `<thead>
       <tr>
         <th>ID</th>
         <th>Requirement</th>
-        ${options.includeMetadata ? '<th>Metadata</th>' : ''}
+        ${options.includeMetadata ? "<th>Metadata</th>" : ""}
       </tr>
     </thead>`;
-    
+
     // Table body
-    html += '<tbody>';
-    
+    html += "<tbody>";
+
     // Add requirements from hierarchy
     if (spec.children && spec.children.length > 0) {
       for (const hierarchy of bundle.iterateSpecificationHierarchy(spec)) {
@@ -151,16 +159,16 @@ export class HTMLExporter {
     } else {
       html += '<tr><td colspan="3">No requirements found</td></tr>';
     }
-    
-    html += '</tbody></table>';
-    html += '</div>'; // Close specification-content
-    
+
+    html += "</tbody></table>";
+    html += "</div>"; // Close specification-content
+
     // End specification section
-    html += '</section>';
-    
+    html += "</section>";
+
     return html;
   }
-  
+
   /**
    * Generate HTML for a hierarchy element
    * @param bundle The ReqIF bundle
@@ -168,21 +176,27 @@ export class HTMLExporter {
    * @param options Export options
    * @returns HTML string
    */
-  private static generateHierarchyHTML(bundle: ReqIFBundle, hierarchy: ReqIFSpecHierarchy, options: HTMLExportOptions): string {
+  private static generateHierarchyHTML(
+    bundle: ReqIFBundle,
+    hierarchy: ReqIFSpecHierarchy,
+    options: HTMLExportOptions,
+  ): string {
     if (!hierarchy.specObjectRef) {
-      return '';
+      return "";
     }
-    
+
     // Get the spec object
-    const specObject = bundle.objectLookup.getSpecObject(hierarchy.specObjectRef);
+    const specObject = bundle.objectLookup.getSpecObject(
+      hierarchy.specObjectRef,
+    );
     if (!specObject) {
-      return '';
+      return "";
     }
-    
+
     // Generate HTML for the spec object
     return this.generateSpecObjectHTML(bundle, specObject, hierarchy, options);
   }
-  
+
   /**
    * Generate HTML for a spec object
    * @param bundle The ReqIF bundle
@@ -191,20 +205,27 @@ export class HTMLExporter {
    * @param options Export options
    * @returns HTML string
    */
-  private static generateSpecObjectHTML(bundle: ReqIFBundle, specObject: ReqIFSpecObject, hierarchy: ReqIFSpecHierarchy, options: HTMLExportOptions): string {
+  private static generateSpecObjectHTML(
+    bundle: ReqIFBundle,
+    specObject: ReqIFSpecObject,
+    hierarchy: ReqIFSpecHierarchy,
+    options: HTMLExportOptions,
+  ): string {
     // Calculate indentation based on hierarchy level
-    const indentClass = hierarchy.level ? `indent-level-${hierarchy.level}` : '';
-    
+    const indentClass = hierarchy.level
+      ? `indent-level-${hierarchy.level}`
+      : "";
+
     // Start table row
     let html = `<tr class="requirement ${indentClass}">`;
-    
+
     // ID column
     html += `<td class="requirement-id">${specObject.identifier}</td>`;
-    
+
     // Content column - look for the primary content attribute (usually XHTML content)
-    let contentHTML = '';
+    let contentHTML = "";
     let foundContent = false;
-    
+
     for (const attrValue of specObject.attributeValues) {
       if (attrValue.kind === ReqIFAttributeValueKind.XHTML) {
         const xhtmlValue = attrValue as any; // Type assertion
@@ -213,7 +234,10 @@ export class HTMLExporter {
           foundContent = true;
           break;
         }
-      } else if (attrValue.kind === ReqIFAttributeValueKind.STRING && !foundContent) {
+      } else if (
+        attrValue.kind === ReqIFAttributeValueKind.STRING &&
+        !foundContent
+      ) {
         const stringValue = attrValue as any; // Type assertion
         if (stringValue.value) {
           contentHTML = `<p>${stringValue.value}</p>`;
@@ -222,20 +246,20 @@ export class HTMLExporter {
         }
       }
     }
-    
+
     // If no content was found, use the long name or identifier
     if (!foundContent) {
       contentHTML = `<p>${specObject.longName || specObject.identifier}</p>`;
     }
-    
+
     // Add content column
     html += `<td class="requirement-content">${contentHTML}</td>`;
-    
+
     // Add metadata column if requested
     if (options.includeMetadata) {
       html += '<td class="requirement-metadata">';
       html += '<div class="metadata-details">';
-      
+
       // Add type information
       if (specObject.typeRef) {
         const type = bundle.objectLookup.getSpecObjectType(specObject.typeRef);
@@ -243,20 +267,20 @@ export class HTMLExporter {
           html += `<div class="metadata-item"><b>Type:</b> ${type.longName || type.identifier}</div>`;
         }
       }
-      
+
       // Add other attributes excluding the content attribute
       for (const attrValue of specObject.attributeValues) {
         // Skip the content attribute we already displayed
         if (attrValue.kind === ReqIFAttributeValueKind.XHTML && foundContent) {
           continue;
         }
-        
+
         // Get attribute definition name if possible
-        let attrName = attrValue.definitionRef;
-        
+        const attrName = attrValue.definitionRef;
+
         // Format the value based on its type
-        let attrValueHtml = '';
-        
+        let attrValueHtml = "";
+
         switch (attrValue.kind) {
           case ReqIFAttributeValueKind.STRING:
           case ReqIFAttributeValueKind.INTEGER:
@@ -264,32 +288,32 @@ export class HTMLExporter {
           case ReqIFAttributeValueKind.BOOLEAN:
           case ReqIFAttributeValueKind.DATE:
             const value = (attrValue as any).value;
-            attrValueHtml = value !== null ? String(value) : '';
+            attrValueHtml = value !== null ? String(value) : "";
             break;
-          
+
           case ReqIFAttributeValueKind.ENUMERATION:
             const values = (attrValue as any).values;
-            attrValueHtml = values.join(', ');
+            attrValueHtml = values.join(", ");
             break;
-          
+
           case ReqIFAttributeValueKind.XHTML:
-            attrValueHtml = '(XHTML content)';
+            attrValueHtml = "(XHTML content)";
             break;
         }
-        
+
         html += `<div class="metadata-item"><b>${attrName}:</b> ${attrValueHtml}</div>`;
       }
-      
-      html += '</div>'; // Close metadata-details
-      html += '</td>';
+
+      html += "</div>"; // Close metadata-details
+      html += "</td>";
     }
-    
+
     // End table row
-    html += '</tr>';
-    
+    html += "</tr>";
+
     return html;
   }
-  
+
   /**
    * Generate HTML header
    * @param options Export options
@@ -300,30 +324,30 @@ export class HTMLExporter {
     html += `  <meta charset="UTF-8">\n`;
     html += `  <meta name="viewport" content="width=device-width, initial-scale=1.0">\n`;
     html += `  <title>${options.title}</title>\n`;
-    
+
     // Add CSS if requested
     if (options.includeStyle) {
       html += `  <style>\n${this.getDefaultCSS()}\n  </style>\n`;
     }
-    
+
     // Add JavaScript if requested
     if (options.includeScript) {
       html += `  <script>\n${this.getDefaultScript()}\n  </script>\n`;
     }
-    
-    html += '</head>\n<body>\n';
+
+    html += "</head>\n<body>\n";
     return html;
   }
-  
+
   /**
    * Generate HTML footer
    * @param options Export options
    * @returns HTML footer string
    */
-  private static generateHTMLFooter(options: HTMLExportOptions): string {
-    return '\n</body>\n</html>';
+  private static generateHTMLFooter(_options: HTMLExportOptions): string {
+    return "\n</body>\n</html>";
   }
-  
+
   /**
    * Get default CSS styling
    * @returns CSS string
@@ -496,7 +520,7 @@ export class HTMLExporter {
     }
     `;
   }
-  
+
   /**
    * Get default JavaScript for interactivity
    * @returns JavaScript string
@@ -551,7 +575,10 @@ export class HTMLExporter {
  * @param options Export options
  * @returns HTML string
  */
-export function exportToHTML(bundle: ReqIFBundle, options: HTMLExportOptions = {}): string {
+export function exportToHTML(
+  bundle: ReqIFBundle,
+  options: HTMLExportOptions = {},
+): string {
   return HTMLExporter.export(bundle, options);
 }
 
@@ -561,6 +588,10 @@ export function exportToHTML(bundle: ReqIFBundle, options: HTMLExportOptions = {
  * @param filePath The file path to save the HTML
  * @param options Export options
  */
-export async function exportToHTMLFile(bundle: ReqIFBundle, filePath: string, options: HTMLExportOptions = {}): Promise<void> {
+export async function exportToHTMLFile(
+  bundle: ReqIFBundle,
+  filePath: string,
+  options: HTMLExportOptions = {},
+): Promise<void> {
   return HTMLExporter.exportToFile(bundle, filePath, options);
 }

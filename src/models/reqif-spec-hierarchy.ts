@@ -1,5 +1,5 @@
-import { ReqIFIdentifiable } from './reqif-types';
-import { ReqIFAttributeValue } from './reqif-attribute-value';
+import { ReqIFIdentifiable } from "./reqif-types";
+import { ReqIFAttributeValue } from "./reqif-attribute-value";
 
 /**
  * Represents a specification hierarchy element in ReqIF.
@@ -10,7 +10,7 @@ export class ReqIFSpecHierarchy implements ReqIFIdentifiable {
    * Map of attribute definition references to attribute values for quick lookup
    */
   private _attributeValueMap: Map<string, ReqIFAttributeValue> = new Map();
-  
+
   constructor(
     public identifier: string,
     public specObjectRef: string,
@@ -25,12 +25,12 @@ export class ReqIFSpecHierarchy implements ReqIFIdentifiable {
     /**
      * Optional reference to the original XML node for unparsing
      */
-    public originalXmlNode?: Element
+    public originalXmlNode?: Element,
   ) {
     // Build the attribute value map for quick lookups
     this.buildAttributeValueMap();
   }
-  
+
   /**
    * Build the attribute value map for quick lookups by definition reference
    */
@@ -40,14 +40,14 @@ export class ReqIFSpecHierarchy implements ReqIFIdentifiable {
       this._attributeValueMap.set(attrValue.definitionRef, attrValue);
     }
   }
-  
+
   /**
    * Get an attribute value by its definition reference
    */
   getAttributeValue(definitionRef: string): ReqIFAttributeValue | undefined {
     return this._attributeValueMap.get(definitionRef);
   }
-  
+
   /**
    * Add an attribute value to the spec hierarchy
    */

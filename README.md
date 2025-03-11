@@ -2,6 +2,11 @@
 
 A TypeScript implementation of the Requirements Interchange Format (ReqIF) standard, providing parsing, validation, and manipulation capabilities for ReqIF documents.
 
+> [!WARNING]
+> This library is currently in development and may contain breaking changes.
+> It's entirely created by claude code and may behave unexpectedly.
+> This message will be changed/removed as the library sees use.
+
 ## Acknowledgment
 
 This project is a TypeScript port of the [reqif](https://github.com/strictdoc-project/reqif) Python library developed by Stanislav Pankevich and contributors. The original project served as the foundation and specification for this TypeScript implementation. We maintain compatibility with the original project's file formats and test cases.
@@ -33,7 +38,7 @@ const reqifBundle = await parse('path/to/file.reqif');
 // Access specifications
 for (const specification of reqifBundle.coreContent.reqIfContent.specifications) {
   console.log(specification.longName);
-  
+
   // Iterate through hierarchy
   for (const hierarchy of reqifBundle.iterateSpecificationHierarchy(specification)) {
     console.log(hierarchy);
@@ -52,16 +57,16 @@ const reqifOutput = unparse(reqifBundle);
   async function processReqIF() {
     const fileInput = document.getElementById('reqifFile');
     const file = fileInput.files[0];
-    
+
     // Parse file content
     const text = await file.text();
     const reqifBundle = ReqIF.parse(text);
-    
+
     // Process the bundle...
-    
+
     // Generate output
     const output = ReqIF.unparse(reqifBundle);
-    
+
     // Save or display output
     const blob = new Blob([output], { type: 'text/xml' });
     const url = URL.createObjectURL(blob);

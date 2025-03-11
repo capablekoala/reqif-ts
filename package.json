@@ -5,7 +5,10 @@
   "type": "commonjs",
   "main": "dist/cjs/index.js",
   "module": "dist/esm/index.js",
-  "browser": "dist/browser/index.js",
+  "browser": {
+    "fs": false,
+    "path": "path-browserify"
+  },
   "types": "dist/types/index.d.ts",
   "exports": {
     ".": {
@@ -25,12 +28,12 @@
     "build:browser": "webpack --config webpack.config.cjs",
     "build:types": "tsc -p tsconfig.types.json",
     "test": "jest",
-    "test:integration": "ts-node scripts/run-integration-tests.ts",
+    "test:integration": "ts-node --project tsconfig.scripts.json scripts/run-integration-tests.ts",
     "lint": "eslint src --ext .ts",
     "format": "prettier --write 'src/**/*.ts'",
     "format:check": "prettier --check 'src/**/*.ts'",
-    "typecheck": "tsc --noEmit",
-    "cli": "ts-node src/cli/index.ts"
+    "typecheck": "tsc -p tsconfig.typecheck.json",
+    "cli": "ts-node --project tsconfig.scripts.json src/cli/index.ts"
   },
   "dependencies": {
     "commander": "^11.1.0",
@@ -38,12 +41,10 @@
     "jsdom": "^22.1.0",
     "xpath": "^0.0.33"
   },
-  "browser": {
-    "fs": false,
-    "path": "path-browserify"
-  },
   "browserify": {
-    "transform": ["browserify-shim"]
+    "transform": [
+      "browserify-shim"
+    ]
   },
   "devDependencies": {
     "@types/glob": "^8.1.0",
@@ -52,6 +53,7 @@
     "@types/node": "^22.0.0",
     "@typescript-eslint/eslint-plugin": "^6.15.0",
     "@typescript-eslint/parser": "^6.15.0",
+    "assert": "^2.1.0",
     "browserify-shim": "^3.8.16",
     "browserify-zlib": "^0.2.0",
     "buffer": "^6.0.3",
@@ -72,6 +74,7 @@
     "typescript": "^5.3.3",
     "url": "^0.11.3",
     "util": "^0.12.5",
+    "vm-browserify": "^1.1.2",
     "webpack": "^5.89.0",
     "webpack-cli": "^5.1.4"
   },

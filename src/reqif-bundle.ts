@@ -1,7 +1,7 @@
-import { ReqIFCoreContent } from './models/reqif-core-content';
-import { ReqIFSpecHierarchy } from './models/reqif-spec-hierarchy';
-import { ReqIFSpecification } from './models/reqif-specification';
-import { ObjectLookup } from './object-lookup';
+import { ReqIFCoreContent } from "./models/reqif-core-content";
+import { ReqIFSpecHierarchy } from "./models/reqif-spec-hierarchy";
+import { ReqIFSpecification } from "./models/reqif-specification";
+import { ObjectLookup } from "./object-lookup";
 
 /**
  * Main container for parsed ReqIF content.
@@ -10,18 +10,20 @@ import { ObjectLookup } from './object-lookup';
 export class ReqIFBundle {
   constructor(
     public coreContent: ReqIFCoreContent,
-    public objectLookup: ObjectLookup
+    public objectLookup: ObjectLookup,
   ) {}
 
   /**
    * Iterates through the specification hierarchy of a given specification.
    * Uses depth-first traversal to visit all nodes in the hierarchy.
    * The level property represents the depth in the hierarchy (0-based).
-   * 
+   *
    * Note: The traversal handles duplicate identifiers in different positions
    * by using both the identifier and the reference to the object in the visited set.
    */
-  *iterateSpecificationHierarchy(specification: ReqIFSpecification): Generator<ReqIFSpecHierarchy> {
+  *iterateSpecificationHierarchy(
+    specification: ReqIFSpecification,
+  ): Generator<ReqIFSpecHierarchy> {
     if (!specification.children) {
       return;
     }
@@ -32,7 +34,7 @@ export class ReqIFBundle {
       // Set the level to 0 for top-level items
       child.level = 0;
       yield child;
-      
+
       // Continue to children (if any)
       if (child.children && child.children.length > 0) {
         yield* this.iterateChildren(child, 1); // Next level is 1
@@ -46,8 +48,8 @@ export class ReqIFBundle {
    * @param level The current level in the hierarchy (depth)
    */
   private *iterateChildren(
-    hierarchy: ReqIFSpecHierarchy, 
-    level: number
+    hierarchy: ReqIFSpecHierarchy,
+    level: number,
   ): Generator<ReqIFSpecHierarchy> {
     if (!hierarchy.children || hierarchy.children.length === 0) {
       return;
@@ -57,7 +59,7 @@ export class ReqIFBundle {
       // Set the level property before yielding
       child.level = level;
       yield child;
-      
+
       // Continue recursion with next level (if the child has children)
       if (child.children && child.children.length > 0) {
         yield* this.iterateChildren(child, level + 1);

@@ -1,5 +1,5 @@
-import { ReqIFReqIFContent } from './reqif-req-if-content';
-import { ReqIFReqIFHeader } from './reqif-reqif-header';
+import { ReqIFReqIFContent } from "./reqif-req-if-content";
+import { ReqIFReqIFHeader } from "./reqif-reqif-header";
 
 /**
  * Represents the core content of a ReqIF document.
@@ -8,6 +8,6 @@ import { ReqIFReqIFHeader } from './reqif-reqif-header';
 export class ReqIFCoreContent {
   constructor(
     public reqIfHeader: ReqIFReqIFHeader,
-    public reqIfContent: ReqIFReqIFContent
+    public reqIfContent: ReqIFReqIFContent,
   ) {}
 }

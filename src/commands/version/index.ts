@@ -1,4 +1,4 @@
-import { version } from '../../version';
+import { version } from "../../version";
 
 /**
  * Command handler for the 'version' command.

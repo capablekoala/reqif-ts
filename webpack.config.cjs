@@ -38,6 +38,9 @@ module.exports = {
       "child_process": false,
       "os": require.resolve("os-browserify/browser"),
       "process": require.resolve("process/browser"),
+      "assert": require.resolve("assert/"),
+      "vm": require.resolve("vm-browserify"),
+      "canvas": false,
     }
   },
   plugins: [
@@ -49,6 +52,11 @@ module.exports = {
     // Ignore fs module in browser builds
     new webpack.IgnorePlugin({
       resourceRegExp: /^fs$/,
+    }),
+    // Ignore canvas module (optional dependency for jsdom)
+    new webpack.IgnorePlugin({
+      resourceRegExp: /^canvas$/,
+      contextRegExp: /jsdom/,
     }),
   ],
   output: {

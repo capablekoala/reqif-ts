@@ -2,7 +2,7 @@
  * Cross-platform XML parsing utilities.
  * Provides consistent XML parsing functionality for both Node.js and browser environments.
  */
-import { isBrowser } from './platform';
+import { isBrowser } from "./platform";
 
 /**
  * XML document representation.
@@ -40,24 +40,26 @@ export function parseXML(xmlString: string): Document {
   if (isBrowser()) {
     // Browser environment
     const parser = new DOMParser();
-    const doc = parser.parseFromString(xmlString, 'application/xml');
-    
+    const doc = parser.parseFromString(xmlString, "application/xml");
+
     // Check for parsing errors
-    const errorNode = doc.querySelector('parsererror');
+    const errorNode = doc.querySelector("parsererror");
     if (errorNode) {
       throw new Error(`XML parsing error: ${errorNode.textContent}`);
     }
-    
+
     return doc;
   } else {
     // Node.js environment
     try {
-      const { JSDOM } = require('jsdom');
-      const dom = new JSDOM(xmlString, { contentType: 'application/xml' });
+      const { JSDOM } = require("jsdom");
+      const dom = new JSDOM(xmlString, { contentType: "application/xml" });
       return dom.window.document;
     } catch (error) {
-      console.error('Error parsing XML in Node.js environment', error);
-      throw new Error(`Failed to parse XML: ${error instanceof Error ? error.message : String(error)}`);
+      console.error("Error parsing XML in Node.js environment", error);
+      throw new Error(
+        `Failed to parse XML: ${error instanceof Error ? error.message : String(error)}`,
+      );
     }
   }
 }
@@ -65,14 +67,17 @@ export function parseXML(xmlString: string): Document {
 /**
  * Serialize a Document or Node object to an XML string.
  * Works in both Node.js and browser environments.
- * 
+ *
  * @param node The DOM node or document to serialize
  * @param prettyPrint Whether to format the XML with indentation
  * @returns The serialized XML string
  */
-export function serializeXML(node: Node | Document, prettyPrint: boolean = false): string {
+export function serializeXML(
+  node: Node | Document,
+  prettyPrint: boolean = false,
+): string {
   let xmlString: string;
-  
+
   if (isBrowser()) {
     // Browser environment
     const serializer = new XMLSerializer();
@@ -80,27 +85,29 @@ export function serializeXML(node: Node | Document, prettyPrint: boolean = false
   } else {
     // Node.js environment
     try {
-      const { JSDOM } = require('jsdom');
-      const { window } = new JSDOM('<!DOCTYPE html><html></html>');
+      const { JSDOM } = require("jsdom");
+      const { window } = new JSDOM("<!DOCTYPE html><html></html>");
       const serializer = new window.XMLSerializer();
       xmlString = serializer.serializeToString(node);
     } catch (error) {
-      console.error('Error serializing XML in Node.js environment', error);
-      throw new Error(`Failed to serialize XML: ${error instanceof Error ? error.message : String(error)}`);
+      console.error("Error serializing XML in Node.js environment", error);
+      throw new Error(
+        `Failed to serialize XML: ${error instanceof Error ? error.message : String(error)}`,
+      );
     }
   }
-  
+
   // Format XML if requested (basic indentation)
   if (prettyPrint) {
     try {
       const formattedXml = formatXML(xmlString);
       return formattedXml;
     } catch (error) {
-      console.warn('XML formatting failed, returning unformatted XML', error);
+      console.warn("XML formatting failed, returning unformatted XML", error);
       return xmlString;
     }
   }
-  
+
   return xmlString;
 }
 
@@ -110,16 +117,16 @@ export function serializeXML(node: Node | Document, prettyPrint: boolean = false
  * @returns The formatted XML string
  */
 function formatXML(xmlString: string): string {
-  const PADDING = ' '.repeat(2); // 2 spaces
+  const PADDING = " ".repeat(2); // 2 spaces
   const reg = /(>)(<)(\/*)/g;
   let pad = 0;
-  
-  xmlString = xmlString.replace(reg, '$1\n$2$3');
-  
-  let formatted = '';
-  const lines = xmlString.split('\n');
-  
-  for (let line of lines) {
+
+  xmlString = xmlString.replace(reg, "$1\n$2$3");
+
+  let formatted = "";
+  const lines = xmlString.split("\n");
+
+  for (const line of lines) {
     let indent = 0;
     if (line.match(/.+<\/\w[^>]*>$/)) {
       // Line contains closing tag
@@ -135,37 +142,55 @@ function formatXML(xmlString: string): string {
       // Line doesn't affect indentation
       indent = 0;
     }
-    
+
     // Apply indentation
     const padding = PADDING.repeat(pad);
-    formatted += padding + line + '\n';
+    formatted += padding + line + "\n";
     pad += indent;
   }
-  
+
   return formatted.trim();
 }
 
 /**
  * Create a new XML document.
  * Works in both Node.js and browser environments.
- * 
+ *
  * @param namespace Optional namespace URI for the document
  * @param qualifiedName Optional qualified name for the root element
  * @returns A new XML Document
  */
-export function createXMLDocument(namespace: string | null = null, qualifiedName: string = ''): Document {
+export function createXMLDocument(
+  namespace: string | null = null,
+  qualifiedName: string = "",
+): Document {
   if (isBrowser()) {
     // Browser environment
-    return document.implementation.createDocument(namespace, qualifiedName, null);
+    return document.implementation.createDocument(
+      namespace,
+      qualifiedName,
+      null,
+    );
   } else {
     // Node.js environment
     try {
-      const { JSDOM } = require('jsdom');
-      const dom = new JSDOM('<!DOCTYPE html><html></html>', { contentType: 'application/xhtml+xml' });
-      return dom.window.document.implementation.createDocument(namespace, qualifiedName, null);
+      const { JSDOM } = require("jsdom");
+      const dom = new JSDOM("<!DOCTYPE html><html></html>", {
+        contentType: "application/xhtml+xml",
+      });
+      return dom.window.document.implementation.createDocument(
+        namespace,
+        qualifiedName,
+        null,
+      );
     } catch (error) {
-      console.error('Error creating XML document in Node.js environment', error);
-      throw new Error(`Failed to create XML document: ${error instanceof Error ? error.message : String(error)}`);
+      console.error(
+        "Error creating XML document in Node.js environment",
+        error,
+      );
+      throw new Error(
+        `Failed to create XML document: ${error instanceof Error ? error.message : String(error)}`,
+      );
     }
   }
 }
@@ -174,7 +199,11 @@ export function createXMLDocument(namespace: string | null = null, qualifiedName
  * Get namespace-aware attribute value.
  * Handles XML namespace differences across platforms.
  */
-export function getNamespaceAttribute(element: Element, namespaceURI: string, localName: string): string | null {
+export function getNamespaceAttribute(
+  element: Element,
+  namespaceURI: string,
+  localName: string,
+): string | null {
   // Try the standard way first
   if (element.getAttributeNS) {
     const value = element.getAttributeNS(namespaceURI, localName);

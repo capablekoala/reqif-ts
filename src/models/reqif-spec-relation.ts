@@ -1,5 +1,5 @@
-import { ReqIFIdentifiable } from './reqif-types';
-import { ReqIFAttributeValue } from './reqif-attribute-value';
+import { ReqIFIdentifiable } from "./reqif-types";
+import { ReqIFAttributeValue } from "./reqif-attribute-value";
 
 /**
  * Represents a spec relation (relationship between requirements) in ReqIF.
@@ -14,16 +14,18 @@ export class ReqIFSpecRelation implements ReqIFIdentifiable {
     public longName?: string,
     public lastChange?: string,
     public desc?: string,
-    public originalXmlNode?: Element
+    public originalXmlNode?: Element,
   ) {}
-  
+
   /**
    * Get an attribute value by its definition reference
    */
   getAttributeValue(definitionRef: string): ReqIFAttributeValue | undefined {
-    return this.attributeValues.find(attrValue => attrValue.definitionRef === definitionRef);
+    return this.attributeValues.find(
+      (attrValue) => attrValue.definitionRef === definitionRef,
+    );
   }
-  
+
   /**
    * Add an attribute value to the spec relation
    */

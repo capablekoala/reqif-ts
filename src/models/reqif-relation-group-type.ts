@@ -1,5 +1,5 @@
-import { ReqIFIdentifiable } from './reqif-types';
-import { ReqIFAttributeDefinition } from '../parsers/attribute-definition-parser';
+import { ReqIFIdentifiable } from "./reqif-types";
+import { ReqIFAttributeDefinition } from "../parsers/attribute-definition-parser";
 
 /**
  * Represents a relation group type in ReqIF.
@@ -12,6 +12,6 @@ export class ReqIFRelationGroupType implements ReqIFIdentifiable {
     public longName?: string,
     public lastChange?: string,
     public desc?: string,
-    public originalXmlNode?: Element
+    public originalXmlNode?: Element,
   ) {}
 }

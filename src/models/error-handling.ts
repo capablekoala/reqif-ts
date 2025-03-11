@@ -4,8 +4,8 @@
 export class ReqIFError extends Error {
   constructor(message: string) {
     super(message);
-    this.name = 'ReqIFError';
-    
+    this.name = "ReqIFError";
+
     // This part is needed in TypeScript to maintain the prototype chain
     Object.setPrototypeOf(this, ReqIFError.prototype);
   }
@@ -17,8 +17,8 @@ export class ReqIFError extends Error {
 export class ReqIFValidationError extends ReqIFError {
   constructor(message: string) {
     super(message);
-    this.name = 'ReqIFValidationError';
-    
+    this.name = "ReqIFValidationError";
+
     Object.setPrototypeOf(this, ReqIFValidationError.prototype);
   }
 }
@@ -29,8 +29,8 @@ export class ReqIFValidationError extends ReqIFError {
 export class ReqIFSchemaError extends ReqIFError {
   constructor(message: string) {
     super(message);
-    this.name = 'ReqIFSchemaError';
-    
+    this.name = "ReqIFSchemaError";
+
     Object.setPrototypeOf(this, ReqIFSchemaError.prototype);
   }
 }

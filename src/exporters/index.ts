@@ -1,22 +1,22 @@
 /**
  * ReqIF Exporters
- * 
+ *
  * This module provides exporters for various formats from ReqIF content.
  */
 
 // Re-export HTML and CSV exporters
-export * from './html';
-export * from './csv';
+export * from "./html";
+export * from "./csv";
 
 // Import main types
-import { ReqIFBundle } from '../reqif-bundle';
-import { HTMLExportOptions, exportToHTML, exportToHTMLFile } from './html';
-import { CSVExportOptions, exportToCSV, exportToCSVFile } from './csv';
+import { ReqIFBundle } from "../reqif-bundle";
+import { HTMLExportOptions, exportToHTML, exportToHTMLFile } from "./html";
+import { CSVExportOptions, exportToCSV, exportToCSVFile } from "./csv";
 
 /**
  * Supported export formats
  */
-export type ExportFormat = 'html' | 'csv' | 'excel';
+export type ExportFormat = "html" | "csv" | "excel";
 
 /**
  * Combined export options for all formats
@@ -34,21 +34,24 @@ export interface ExportOptions {
  * @param options Export options including format
  * @returns Exported content as string or Map of strings
  */
-export function exportReqIF(bundle: ReqIFBundle, options: ExportOptions): string | Map<string, string> {
+export function exportReqIF(
+  bundle: ReqIFBundle,
+  options: ExportOptions,
+): string | Map<string, string> {
   switch (options.format) {
-    case 'html':
+    case "html":
       return exportToHTML(bundle, options.html);
-    
-    case 'csv':
+
+    case "csv":
       return exportToCSV(bundle, options.csv);
-    
-    case 'excel':
+
+    case "excel":
       // Currently exports as CSV, which Excel can import
       return exportToCSV(bundle, {
-        delimiter: ',',
-        ...(options.csv || {})
+        delimiter: ",",
+        ...(options.csv || {}),
       });
-    
+
     default:
       throw new Error(`Unsupported export format: ${options.format}`);
   }
@@ -61,28 +64,28 @@ export function exportReqIF(bundle: ReqIFBundle, options: ExportOptions): string
  * @param options Export options including format
  */
 export async function exportReqIFToFile(
-  bundle: ReqIFBundle, 
-  filePath: string, 
-  options: ExportOptions
+  bundle: ReqIFBundle,
+  filePath: string,
+  options: ExportOptions,
 ): Promise<void> {
   switch (options.format) {
-    case 'html':
+    case "html":
       return await exportToHTMLFile(bundle, filePath, options.html);
-    
-    case 'csv':
+
+    case "csv":
       return await exportToCSVFile(bundle, filePath, options.csv);
-    
-    case 'excel':
+
+    case "excel":
       // For now, create a CSV file that Excel can import
       // Later, this could be replaced with actual Excel export
-      if (!filePath.endsWith('.csv')) {
-        filePath += '.csv';
+      if (!filePath.endsWith(".csv")) {
+        filePath += ".csv";
       }
       return await exportToCSVFile(bundle, filePath, {
-        delimiter: ',',
-        ...(options.csv || {})
+        delimiter: ",",
+        ...(options.csv || {}),
       });
-    
+
     default:
       throw new Error(`Unsupported export format: ${options.format}`);
   }

@@ -11,6 +11,6 @@ export class ReqIFReqIFHeader {
     public reqIfVersion?: string,
     public sourceToolId?: string,
     public title?: string,
-    public comment?: string
+    public comment?: string,
   ) {}
 }

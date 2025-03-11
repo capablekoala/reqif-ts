@@ -77,7 +77,9 @@ function runTest(testFile: string): boolean {
       console.log(`${colors.cyan}Executing: ${command}${colors.reset}`);
       
       // Replace %s with the path to the script
-      const finalCommand = command.replace(/%s/g, 'node ./dist/cjs/cli/index.js');
+      // Use absolute path to the CLI
+      const cliPath = path.resolve(__dirname, '../dist/cjs/cli/index.js');
+      const finalCommand = command.replace(/%s/g, `node ${cliPath}`);
       
       // Execute in the directory of the test file
       const output = execSync(finalCommand, { 

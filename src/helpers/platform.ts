@@ -6,21 +6,25 @@
  * Check if the code is running in a browser environment.
  */
 export function isBrowser(): boolean {
-  return typeof window !== 'undefined' && typeof window.document !== 'undefined';
+  return (
+    typeof window !== "undefined" && typeof window.document !== "undefined"
+  );
 }
 
 /**
  * Check if the code is running in a Node.js environment.
  */
 export function isNode(): boolean {
-  return typeof process !== 'undefined' && 
-         process.versions != null && 
-         process.versions.node != null;
+  return (
+    typeof process !== "undefined" &&
+    process.versions != null &&
+    process.versions.node != null
+  );
 }
 
 /**
  * Get a platform-specific implementation of a feature.
- * 
+ *
  * @param browserImpl The browser implementation
  * @param nodeImpl The Node.js implementation
  * @returns The appropriate implementation for the current platform
@@ -39,10 +43,12 @@ export interface PlatformImplementations<T> {
 
 /**
  * Get the appropriate implementation for the current platform.
- * 
+ *
  * @param implementations Object with browser and node implementations
  * @returns The appropriate implementation for the current platform
  */
-export function getImplementation<T>(implementations: PlatformImplementations<T>): T {
+export function getImplementation<T>(
+  implementations: PlatformImplementations<T>,
+): T {
   return isBrowser() ? implementations.browser : implementations.node;
 }

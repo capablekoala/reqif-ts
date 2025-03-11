@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<REQ-IF xmlns:xhtml="http://www.w3.org/1999/xhtml">
+  <THE-HEADER>
+    <REQ-IF-HEADER IDENTIFIER="minimal-example" CREATION-TIME="2023-01-01T12:00:00Z"/>
+  </THE-HEADER>
+  <CORE-CONTENT>
+    <REQ-IF-CONTENT/>
+  </CORE-CONTENT>
+</REQ-IF>
