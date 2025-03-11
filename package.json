@@ -28,6 +28,8 @@
     "test:integration": "ts-node scripts/run-integration-tests.ts",
     "lint": "eslint src --ext .ts",
     "format": "prettier --write 'src/**/*.ts'",
+    "format:check": "prettier --check 'src/**/*.ts'",
+    "typecheck": "tsc --noEmit",
     "cli": "ts-node src/cli/index.ts"
   },
   "dependencies": {
